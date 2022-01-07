@@ -7,6 +7,15 @@ const app = express();
 //Connect database
 connectDB();
 
+// Routes
+const authRoute = require("./routes/api/auth");
+const userRoute = require("./routes/api/user");
+
+// Middleware
+app.use(express.json());
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
+
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });

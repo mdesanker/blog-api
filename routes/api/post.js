@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const postController = require("../../controllers/postController");
-const auth = require("../../middleware/authMiddleware");
+const authMiddleware = require("../../middleware/authMiddleware");
 
 // @route  GET /api/post
 // @desc   Test route
@@ -12,6 +12,6 @@ router.get("/", postController.postGet);
 // @route  POST /api/post/new
 // @desc   Create post
 // @access Private
-router.get("/new", auth, postController.createPost);
+router.post("/new", authMiddleware, postController.createPost);
 
 module.exports = router;

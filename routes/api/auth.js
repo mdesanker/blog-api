@@ -8,4 +8,9 @@ const authController = require("../../controllers/authController");
 // @access Public
 router.get("/", authController.authGet);
 
+// @route  POST /api/auth
+// @desc   Authenticate & get jwt
+// @access Public
+router.post("/", authController.authPost);
+
 module.exports = router;

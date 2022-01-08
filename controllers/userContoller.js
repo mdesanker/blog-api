@@ -1,5 +1,7 @@
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const User = require("../models/User");
 
@@ -49,7 +51,19 @@ exports.userPost = [
 
       // Save user in db
       await user.save();
-      return res.status(200).json({ msg: "New account created" });
+      // return res.status(200).json({ msg: "New account created" });
+
+      // Return jwt
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      jwt.sign(payload, process.env.KEY, { expiresIn: "5h" }, (err, token) => {
+        if (err) throw new Error(err);
+        res.json({ token });
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");

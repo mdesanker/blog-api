@@ -46,3 +46,48 @@ exports.createPost = [
     }
   },
 ];
+
+// Update existing post on POST
+exports.updatePost = [
+  // Validate and sanitize
+  check("title", "A title is required for your post")
+    .trim()
+    .not()
+    .isEmpty()
+    .escape(),
+  check("content", "Post must have some content")
+    .trim()
+    .not()
+    .isEmpty()
+    .escape(),
+  check("publish").isBoolean(),
+
+  // Process request
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { id, title, content, publish } = req.body;
+
+    const post = new Post({
+      author: req.user.id,
+      title,
+      content,
+      publish,
+      _id: id,
+    });
+
+    try {
+      // Find existing post
+      const doc = await Post.findByIdAndUpdate(id, post, { new: true });
+
+      res.json(doc);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  },
+];

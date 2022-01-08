@@ -14,4 +14,9 @@ router.get("/", postController.postGet);
 // @access Private
 router.post("/new", authMiddleware, postController.createPost);
 
+// @route  PUT /api/post/update
+// @desc   Update post
+// @access Private
+router.put("/update", authMiddleware, postController.updatePost);
+
 module.exports = router;

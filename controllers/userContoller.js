@@ -51,7 +51,7 @@ exports.userPost = [
 
       // Save user in db
       await user.save();
-      // return res.status(200).json({ msg: "New account created" });
+      // return res.json(user);
 
       // Return jwt
       const payload = {

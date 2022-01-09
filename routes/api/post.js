@@ -30,7 +30,7 @@ router.put("/update", authMiddleware, postController.updatePost);
 router.delete("/delete", authMiddleware, postController.deletePost);
 
 // @route  PUT /api/post/like/:id
-// @desc   Add like to post
+// @desc   Toggle like on post
 // @access Private
 router.put("/like/:id", authMiddleware, postController.likePost);
 

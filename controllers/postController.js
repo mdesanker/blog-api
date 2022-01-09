@@ -156,22 +156,26 @@ exports.deletePost = async (req, res, next) => {
   }
 };
 
-// Like post on PUT
+// Toggle like on post on PUT
 exports.likePost = async (req, res, next) => {
   try {
     const { id } = req.params;
 
     // Find post
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate("likes");
+
+    let newLikes;
 
     // Check if liked
-    if (post.likes.includes(req.user.id)) {
-      // User already liked post
-      return res.status(400).json({ error: [{ msg: "Post already liked" }] });
+    if (post.likes.find((like) => like.id === req.user.id)) {
+      // Already liked - remove like
+      newLikes = post.likes.filter((like) => like.id !== req.user.id);
+    } else {
+      // Not already liked - add like
+      newLikes = post.likes.concat(req.user.id);
     }
 
-    const newLikes = post.likes.concat(req.user.id);
-
+    // Update post
     const doc = await Post.findByIdAndUpdate(
       id,
       { likes: newLikes },

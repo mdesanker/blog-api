@@ -103,4 +103,22 @@ exports.updatePost = [
   },
 ];
 
-exports.deletePost = [];
+exports.deletePost = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+
+    // Verify author
+    const post = await Post.findById(id).populate("author");
+
+    if (!(post.author.id === req.user.id)) {
+      return res.status(401).json({ error: [{ msg: "Invalid credentials" }] });
+    }
+
+    await Post.findByIdAndDelete(id);
+
+    res.json({ msg: "Post deleted" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};

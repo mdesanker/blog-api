@@ -72,8 +72,7 @@ exports.updatePost = [
 
     const { id, title, content, publish } = req.body;
 
-    const post = new Post({
-      author: req.user.id,
+    const newPost = new Post({
       title,
       content,
       publish,
@@ -82,7 +81,19 @@ exports.updatePost = [
 
     try {
       // Find existing post
-      const doc = await Post.findByIdAndUpdate(id, post, { new: true });
+      const post = await Post.findById(id).populate("author");
+
+      // Only allow author to update
+      if (!(post.author.id === req.user.id)) {
+        return res
+          .status(401)
+          .json({ error: [{ msg: "Invalid credentials" }] });
+      }
+
+      // Update the post
+      const doc = await Post.findByIdAndUpdate(id, newPost, {
+        new: true,
+      });
 
       res.json(doc);
     } catch (err) {
@@ -91,3 +102,5 @@ exports.updatePost = [
     }
   },
 ];
+
+exports.deletePost = [];

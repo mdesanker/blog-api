@@ -19,4 +19,9 @@ router.post("/new", authMiddleware, postController.createPost);
 // @access Private
 router.put("/update", authMiddleware, postController.updatePost);
 
+// @route  DELETE /api/post/delete
+// @desc   Delete post
+// @access Private
+router.delete("/delete", authMiddleware, postController.deletePost);
+
 module.exports = router;

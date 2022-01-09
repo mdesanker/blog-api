@@ -1,9 +1,18 @@
 const { check, validationResult } = require("express-validator");
 
-const User = require("../models/User");
-const Post = require("../models/Post");
 const Comment = require("../models/Comment");
-const { findById } = require("../models/Post");
+
+// Get count of all comments
+exports.commentCountGet = async (req, res, next) => {
+  try {
+    const count = await Comment.countDocuments({});
+
+    res.json(count);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
 
 // Get comments for specific post
 exports.commentForPostGet = async (req, res, next) => {

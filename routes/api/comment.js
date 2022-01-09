@@ -4,6 +4,11 @@ const router = express.Router();
 const commentController = require("../../controllers/commentController");
 const authMiddleware = require("../../middleware/authMiddleware");
 
+// @route  GET /api/comment/count
+// @desc   Get count of all comments
+// @access Public
+router.get("/count", commentController.commentCountGet);
+
 // @route  GET /api/comment/post/:id
 // @desc   Get all comments for a specific post
 // @access Public

@@ -19,4 +19,9 @@ router.post("/create", authMiddleware, commentController.commentPost);
 // @access Private
 router.put("/update", authMiddleware, commentController.commentUpdate);
 
+// @route  DELETE /api/comment/delete
+// @desc   Delete comment
+// @access Private
+router.delete("/delete", authMiddleware, commentController.commentDelete);
+
 module.exports = router;

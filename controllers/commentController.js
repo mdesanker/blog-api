@@ -87,3 +87,23 @@ exports.commentUpdate = [
     }
   },
 ];
+
+exports.commentDelete = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+
+    // Check that user is comment author
+    const comment = await Comment.findById(id).populate("author");
+
+    if (comment.author.id !== req.user.id) {
+      return res.status(401).json({ error: [{ msg: "Invalid credentials" }] });
+    }
+
+    await Comment.findByIdAndDelete(id);
+
+    res.json({ msg: "Comment deleted" });
+  } catch (err) {
+    console.error(err.message);
+    res.stats(500).send("Server error");
+  }
+};

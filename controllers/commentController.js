@@ -6,8 +6,17 @@ const Comment = require("../models/Comment");
 const { findById } = require("../models/Post");
 
 // Test route
-exports.commentGet = (req, res, next) => {
-  res.send("NOT IMPLEMENTED");
+exports.commentForPostGet = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const comments = await Comment.find({ post: id }).populate("author");
+
+    res.json(comments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 };
 
 // Create new comment on POST

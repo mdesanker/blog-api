@@ -4,10 +4,10 @@ const router = express.Router();
 const commentController = require("../../controllers/commentController");
 const authMiddleware = require("../../middleware/authMiddleware");
 
-// @route  GET /api/comment/
-// @desc   Test route
+// @route  GET /api/comment/post/:id
+// @desc   Get all comments for a specific post
 // @access Public
-router.get("/", commentController.commentGet);
+router.get("/post/:id", commentController.commentForPostGet);
 
 // @route  POST /api/comment/create
 // @desc   Create comment

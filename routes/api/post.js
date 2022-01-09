@@ -7,7 +7,12 @@ const authMiddleware = require("../../middleware/authMiddleware");
 // @route  GET /api/post/all
 // @desc   Get all posts
 // @access Public
-router.get("/all", postController.postGet);
+router.get("/all", postController.postGetAll);
+
+// @route  GET /api/post/:id
+// @desc   Get specific post
+// @access Public
+router.get("/:id", postController.postGet);
 
 // @route  POST /api/post/new
 // @desc   Create post

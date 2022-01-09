@@ -3,11 +3,23 @@ const { check, validationResult } = require("express-validator");
 const Post = require("../models/Post");
 
 // Get all posts on GET
-exports.postGet = async (req, res, next) => {
+exports.postGetAll = async (req, res, next) => {
   try {
     const posts = await Post.find({}).populate("author");
 
     res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+// Get specific post by id
+exports.postGet = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id).populate("author");
+
+    res.json(post);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

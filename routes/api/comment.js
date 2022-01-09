@@ -9,4 +9,9 @@ const authMiddleware = require("../../middleware/authMiddleware");
 // @access Public
 router.get("/", commentController.commentGet);
 
+// @route  POST /api/comment/
+// @desc   Create comment
+// @access Private
+router.post("/create", authMiddleware, commentController.commentPost);
+
 module.exports = router;

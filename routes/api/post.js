@@ -29,4 +29,9 @@ router.put("/update", authMiddleware, postController.updatePost);
 // @access Private
 router.delete("/delete", authMiddleware, postController.deletePost);
 
+// @route  PUT /api/post/like/:id
+// @desc   Add like to post
+// @access Public
+router.put("/like/:id", postController.likePost);
+
 module.exports = router;

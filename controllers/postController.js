@@ -154,3 +154,15 @@ exports.deletePost = async (req, res, next) => {
     res.status(500).send("Server error");
   }
 };
+
+// Like post on PUT
+exports.likePost = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    res.send(id);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};

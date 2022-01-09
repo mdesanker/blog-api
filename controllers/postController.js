@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+const { findByIdAndUpdate } = require("../models/Post");
 
 const Post = require("../models/Post");
 const User = require("../models/User");
@@ -160,7 +161,23 @@ exports.likePost = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    res.send(id);
+    // Find post
+    const post = await Post.findById(id);
+
+    // Check if liked
+    if (post.likes.includes(req.user.id)) {
+      // User already liked post
+      return res.status(400).json({ error: [{ msg: "Post already liked" }] });
+    }
+
+    const newLikes = post.likes.concat(req.user.id);
+
+    const doc = await Post.findByIdAndUpdate(
+      id,
+      { likes: newLikes },
+      { new: true }
+    );
+    res.json(doc);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

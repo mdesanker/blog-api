@@ -4,10 +4,10 @@ const router = express.Router();
 const postController = require("../../controllers/postController");
 const authMiddleware = require("../../middleware/authMiddleware");
 
-// @route  GET /api/post
-// @desc   Test route
+// @route  GET /api/post/all
+// @desc   Get all posts
 // @access Public
-router.get("/", postController.postGet);
+router.get("/all", postController.postGet);
 
 // @route  POST /api/post/new
 // @desc   Create post

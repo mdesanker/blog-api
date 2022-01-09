@@ -2,9 +2,19 @@ const { check, validationResult } = require("express-validator");
 
 const Post = require("../models/Post");
 
-exports.postGet = (req, res) => res.send("Post GET test route");
+// Get all posts on GET
+exports.postGet = async (req, res, next) => {
+  try {
+    const posts = await Post.find({}).populate("author");
 
-// Create new post on POST
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+// Create new post on PUT
 exports.createPost = [
   // Validate and sanitize
   check("title", "A title is required for your post")

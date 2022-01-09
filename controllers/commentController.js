@@ -5,12 +5,26 @@ const Post = require("../models/Post");
 const Comment = require("../models/Comment");
 const { findById } = require("../models/Post");
 
-// Test route
+// Get comments for specific post
 exports.commentForPostGet = async (req, res, next) => {
   try {
     const { id } = req.params;
 
     const comments = await Comment.find({ post: id }).populate("author");
+
+    res.json(comments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+// Get comments for specific user
+exports.commentForUserGet = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const comments = await Comment.find({ author: id }).populate("author");
 
     res.json(comments);
   } catch (err) {

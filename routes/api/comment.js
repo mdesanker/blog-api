@@ -9,6 +9,11 @@ const authMiddleware = require("../../middleware/authMiddleware");
 // @access Public
 router.get("/post/:id", commentController.commentForPostGet);
 
+// @route  GET /api/comment/user/:id
+// @desc   Get all comments for a specific user
+// @access Public
+router.get("/user/:id", commentController.commentForUserGet);
+
 // @route  POST /api/comment/create
 // @desc   Create comment
 // @access Private

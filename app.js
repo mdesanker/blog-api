@@ -8,14 +8,12 @@ const app = express();
 connectDB();
 
 // Routes
-const authRoute = require("./routes/api/auth");
 const userRoute = require("./routes/api/user");
 const postRoute = require("./routes/api/post");
 const commentRoute = require("./routes/api/comment");
 
 // Middleware
 app.use(express.json());
-app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
 app.use("/api/comment", commentRoute);

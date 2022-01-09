@@ -1,6 +1,7 @@
 const { check, validationResult } = require("express-validator");
 
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 // Get all posts on GET
 exports.postGetAll = async (req, res, next) => {
@@ -26,7 +27,7 @@ exports.postGet = async (req, res, next) => {
   }
 };
 
-// Create new post on PUT
+// Create new post on POST
 exports.createPost = [
   // Validate and sanitize
   check("title", "A title is required for your post")
@@ -50,6 +51,15 @@ exports.createPost = [
     }
 
     try {
+      // Check user is admin
+      const user = await User.findById(req.user.id).select("-password");
+
+      if (!user.admin) {
+        return res
+          .status(401)
+          .json({ error: [{ msg: "Invalid credentials" }] });
+      }
+
       // Create new post object
       const { title, content, publish } = req.body;
 
@@ -69,7 +79,7 @@ exports.createPost = [
   },
 ];
 
-// Update existing post on POST
+// Update existing post on PUT
 exports.updatePost = [
   // Validate and sanitize
   check("title", "A title is required for your post")

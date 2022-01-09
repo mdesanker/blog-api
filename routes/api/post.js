@@ -14,10 +14,10 @@ router.get("/all", postController.postGetAll);
 // @access Public
 router.get("/:id", postController.postGet);
 
-// @route  POST /api/post/new
+// @route  POST /api/post/create
 // @desc   Create post
 // @access Private
-router.post("/new", authMiddleware, postController.createPost);
+router.post("/create", authMiddleware, postController.createPost);
 
 // @route  PUT /api/post/update
 // @desc   Update post

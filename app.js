@@ -1,11 +1,17 @@
 const express = require("express");
 const connectDB = require("./config/db");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
 
 //Connect database
 connectDB();
+
+// Enable CORS
+const urls = [/\localhost/];
+
+app.use(cors({ origin: urls, credentials: true }));
 
 // Routes
 const userRoute = require("./routes/api/user");
@@ -19,7 +25,7 @@ app.use("/api/post", postRoute);
 app.use("/api/comment", commentRoute);
 
 app.get("/", (req, res) => {
-  res.send("Hello, world!");
+  res.json({ msg: "This is CORS-enabled for all origins" });
 });
 
 const PORT = process.env.PORT || 3000;

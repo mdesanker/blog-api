@@ -100,7 +100,7 @@ exports.userLoginPost = [
       // If user not found
       if (!user) {
         return res
-          .stats(400)
+          .status(400)
           .json({ errors: [{ msg: "Invalid credentials" }] });
       }
 
@@ -110,7 +110,7 @@ exports.userLoginPost = [
       // If not match
       if (!isMatch) {
         return res
-          .stats(400)
+          .status(400)
           .json({ errors: [{ msg: "Invalid credentials" }] });
       }
 

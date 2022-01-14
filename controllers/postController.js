@@ -7,7 +7,7 @@ const User = require("../models/User");
 // Get all posts on GET
 exports.postGetAll = async (req, res, next) => {
   try {
-    const posts = await Post.find({}).populate("author");
+    const posts = await Post.find({}).populate("author").sort({ date: -1 });
 
     res.json(posts);
   } catch (err) {

@@ -1,6 +1,7 @@
 const { check, validationResult } = require("express-validator");
 
 const Comment = require("../models/Comment");
+const User = require("../models/User");
 
 // Get count of all comments
 exports.commentCountGet = async (req, res, next) => {
@@ -60,10 +61,12 @@ exports.commentPost = [
 
       // Create new comment object
       const comment = new Comment({
-        author: req.user.id,
+        // author: req.user.id,
         post,
         content,
       });
+
+      comment.author = await User.findById(req.user.id);
 
       await comment.save();
       res.json(comment);

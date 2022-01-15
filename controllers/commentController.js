@@ -46,7 +46,7 @@ exports.commentForUserGet = async (req, res, next) => {
 // Create new comment on POST
 exports.commentPost = [
   // Validate and sanitize input
-  check("content", "Comment must not be blank").trim().not().isEmpty().escape(),
+  check("content", "Comment must not be blank").trim().not().isEmpty(),
 
   // Process input
   async (req, res, next) => {
@@ -80,7 +80,7 @@ exports.commentPost = [
 // Update comment on PUT
 exports.commentUpdate = [
   // Validate and sanitize input
-  check("content", "Comment must not be blank").trim().not().isEmpty().escape(),
+  check("content", "Comment must not be blank").trim().not().isEmpty(),
 
   // Process input
   async (req, res, next) => {
@@ -139,6 +139,6 @@ exports.commentDelete = async (req, res, next) => {
     res.json({ msg: "Comment deleted" });
   } catch (err) {
     console.error(err.message);
-    res.stats(500).send("Server error");
+    res.status(500).send("Server error");
   }
 };

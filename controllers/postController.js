@@ -31,16 +31,8 @@ exports.postGet = async (req, res, next) => {
 // Create new post on POST
 exports.createPost = [
   // Validate and sanitize
-  check("title", "A title is required for your post")
-    .trim()
-    .not()
-    .isEmpty()
-    .escape(),
-  check("content", "Post must have some content")
-    .trim()
-    .not()
-    .isEmpty()
-    .escape(),
+  check("title", "A title is required for your post").trim().not().isEmpty(),
+  check("content", "Post must have some content").trim().not().isEmpty(),
   check("publish").isBoolean(),
 
   // Process request
@@ -83,16 +75,8 @@ exports.createPost = [
 // Update existing post on PUT
 exports.updatePost = [
   // Validate and sanitize
-  check("title", "A title is required for your post")
-    .trim()
-    .not()
-    .isEmpty()
-    .escape(),
-  check("content", "Post must have some content")
-    .trim()
-    .not()
-    .isEmpty()
-    .escape(),
+  check("title", "A title is required for your post").trim().not().isEmpty(),
+  check("content", "Post must have some content").trim().not().isEmpty(),
   check("publish").isBoolean(),
 
   // Process request
